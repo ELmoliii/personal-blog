@@ -3,47 +3,67 @@ import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import { getCollection } from 'astro:content';
+import FormattedDate from '../components/FormattedDate.astro';
+const posts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+).slice(0, 1);
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<style>
+			h1,h2{
+				text-align: center;
+			}
+			a{
+			text-decoration: none;
+			text-align: center;
+			}
+		</style>
 	</head>
 	<body>
 		<Header />
 		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
+			<h2>  <span >MoliNet: Tu blog digital </span>✨ </h2>
+			<br>
 			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This
-				template serves as a lightweight, minimally-styled starting point for anyone looking to build
-				a personal website, blog, or portfolio with Astro.
+				¡Bienvenido al blog de MoliNet! Este es tu espacio para aprender y explorar todo lo relacionado con la tecnología. Aquí encontrarás artículos, tutoriales, noticias y mucho más para mantenerte actualizado en el mundo digital.
 			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
+			<br>
+			<br>
+			<h2> <span>¿Qué encontrarás aquí?</span> 🔍</h2>
+			<br>
 			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
+				<li><strong>Guías sencillas</strong> para entender conceptos tecnológicos complejos</li>
+				<li><strong>Análisis claros</strong> de las últimas tendencias tecnológicas</li>
+				<li><strong>Recomendaciones</strong> de herramientas útiles para el día a día</li>
+				<li><strong>Consejos prácticos</strong> para aprovechar al máximo la tecnología</li>
 			</ul>
-			<p>
-				Have fun! If you get stuck, remember to <a href="https://docs.astro.build/"
-					>read the docs
-				</a> or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out <a
-					href="https://github.com/Charca/astro-blog-template"
-					>astro-blog-template
-				</a> by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
+			<br>
+			<br>
+			<h2> <span>Ultima Publicacion</span> 📃</h2>
+			<br>
+			<section>							
+					{
+						posts.map((post) => (
+							<div>
+							
+								<a href={`/blog/${post.slug}/`}>
+									<img width={720} height={360} src={post.data.heroImage} alt="" />
+									<h4 class="title">{post.data.title}</h4>
+									<p class="date">
+										<FormattedDate date={post.data.pubDate} />
+									</p>
+								</a>
+							</div>	
+							
+						))
+					}
+				
+			</section>
 		</main>
 		<Footer />
 	</body>

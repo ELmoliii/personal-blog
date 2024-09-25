@@ -10,10 +10,15 @@ type Props = CollectionEntry<'blog'>['data'];
 const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 ---
 
-<html lang="en">
+<html lang="es">
 	<head>
 		<BaseHead title={title} description={description} />
 		<style>
+			h2{
+				font-size:2em;
+				margin-bottom:1em;
+				color-text:rgb(var(--accent-dark));
+			}
 			main {
 				width: calc(100% - 2em);
 				max-width: 100%;
@@ -23,11 +28,21 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 				width: 100%;
 			}
 			.hero-image img {
+				width: 500px;
 				display: block;
 				margin: 0 auto;
 				border-radius: 12px;
+				background-color: var(--box-shadow);
 				box-shadow: var(--box-shadow);
+				border-radius: 60px;
+				transition: transform 1.5s ease-in-out;
 			}
+			
+			
+			.hero-image img:hover {
+			transform: translateY(-10px) scale(1.2);
+			}
+			
 			.prose {
 				width: 720px;
 				max-width: calc(100% - 2em);
@@ -51,6 +66,7 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 			.last-updated-on {
 				font-style: italic;
 			}
+
 		</style>
 	</head>
 
@@ -73,7 +89,7 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 								)
 							}
 						</div>
-						<h1>{title}</h1>
+						<h1>{title} </h1>
 						<hr />
 					</div>
 					<slot />
